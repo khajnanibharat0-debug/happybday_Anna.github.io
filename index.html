@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day Made for Anna ★</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root {
+  --pink: #d98cac;
+  --purple: #b88ac9;
+  --accent-deep: #7d5870;
+  --text: #6e5264;
+  --cream: #fff7f5;
+  --card-bg: rgba(255, 255, 255, 0.86);
+  --border-soft: rgba(235, 198, 216, 0.82);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255, 224, 236, 0.92), transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(232, 208, 250, 0.84), transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(255, 238, 226, 0.78), transparent 50%),
+    linear-gradient(145deg, #fff7f5, #fceaf2, #f8efff);
+  min-height: 100vh;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  z-index: 40;
+  background: linear-gradient(90deg, var(--pink), var(--purple), #f2a6c4);
+  box-shadow: 0 2px 10px rgba(184, 138, 201, 0.45);
+  transition: width 0.08s linear;
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(42px, 8vw, 74px);
+  line-height: 1.12;
+  color: var(--accent-deep);
+  text-shadow: 0 12px 30px rgba(184, 138, 201, 0.2);
+}
+
+h2 {
+  font-size: clamp(28px, 4.5vw, 38px);
+  color: #8b5e78;
+}
+
+p {
+  line-height: 1.8;
+  margin: 0.65em 0;
+}
+
+.eyebrow {
+  color: #b57191;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Top Quick Nav */
+.top-nav {
+  position: sticky;
+  top: 14px;
+  z-index: 25;
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 8px 14px;
+  margin-top: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 10px 28px rgba(182, 125, 154, 0.16);
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #895d76;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.top-nav a:hover,
+.top-nav a.active {
+  background: linear-gradient(120deg, rgba(217, 140, 172, 0.25), rgba(184, 138, 201, 0.25));
+  color: #653f55;
+}
+
+/* Countdown Screen */
+.screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  perspective: 1100px;
+}
+
+.count-card {
+  width: min(650px, 100%);
+  padding: 52px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 32px;
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 70px rgba(199, 142, 170, 0.22);
+  animation: appear 0.9s ease;
+}
+
+.small-badge {
+  font-size: 42px;
+  color: var(--pink);
+  margin-bottom: 8px;
+  animation: pulseBadge 2.6s infinite ease-in-out;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 34px 0;
+}
+
+.timer div {
+  min-width: 84px;
+  padding: 18px 12px;
+  border-radius: 20px;
+  background: #fff1f6;
+  border: 1px solid #f7dce8;
+  box-shadow: 0 8px 18px rgba(217, 140, 172, 0.12);
+}
+
+.timer strong {
+  display: block;
+  font-size: 30px;
+  color: #b86f90;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer span {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #966c82;
+}
+
+/* Buttons */
+.primary {
+  border: 0;
+  border-radius: 30px;
+  padding: 14px 26px;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 500;
+  background: linear-gradient(120deg, var(--pink), var(--purple));
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(198, 138, 170, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.primary:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 34px rgba(198, 138, 170, 0.45);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.ghost-btn {
+  margin-top: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #885d74;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ghost-btn:hover {
+  background: #fff0f7;
+  transform: translateY(-1px);
+}
+
+/* Hero with 3D Parallax Depth */
+.hero {
+  min-height: 86vh;
+  padding: 64px 20px 76px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+.parallax-layer {
+  transition: transform 0.16s ease-out;
+  will-change: transform;
+}
+
+.hero h1 span {
+  display: inline-block;
+  color: #cb7598;
+  font-style: italic;
+  animation: gentleWave 4s infinite ease-in-out;
+}
+
+.flower-decoration {
+  font-size: 38px;
+  margin: 22px 0;
+  animation: float3d 3.6s infinite ease-in-out;
+  transform-style: preserve-3d;
+}
+
+/* Sections & Scroll Reveal */
+.section {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 64px 24px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 40px rgba(182, 125, 154, 0.08);
+  opacity: 0;
+  transform: translateY(24px) scale(0.99);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 3D Tilt Cards + Holographic Sheen */
+.tilt-inner {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  --mx: 50%;
+  --my: 50%;
+  --sheen: 0;
+}
+
+.tilt-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: var(--sheen);
+  background: radial-gradient(
+    360px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.52),
+    rgba(255, 224, 240, 0.16) 40%,
+    transparent 72%
+  );
+  transition: opacity 0.25s ease;
+}
+
+/* Vibe Selector */
+.vibe-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 18px;
+}
+
+.vibe-pill {
+  border: 1px solid var(--border-soft);
+  background: var(--card-bg);
+  color: #7c546b;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 11px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(198, 138, 170, 0.1);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.vibe-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--pink);
+}
+
+.vibe-pill.active {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--pink), var(--purple));
+  box-shadow: 0 10px 22px rgba(184, 138, 201, 0.32);
+}
+
+/* Mini-Game Arena */
+.game-hud {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0 16px;
+}
+
+.hud-pill {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7b526a;
+  box-shadow: 0 6px 16px rgba(198, 138, 170, 0.1);
+}
+
+.game-arena {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  height: 310px;
+  margin: 16px auto 18px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 240, 247, 0.92), transparent 55%),
+    radial-gradient(circle at 80% 75%, rgba(242, 224, 252, 0.88), transparent 55%),
+    linear-gradient(160deg, rgba(255, 250, 252, 0.94), rgba(250, 236, 246, 0.9));
+  border: 1px solid var(--border-soft);
+  box-shadow: inset 0 2px 14px rgba(198, 138, 170, 0.14), 0 12px 28px rgba(182, 125, 154, 0.14);
+  perspective: 700px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.falling-item {
+  position: absolute;
+  top: -44px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 6px 10px rgba(125, 88, 112, 0.18));
+}
+
+.pop-tag {
+  position: absolute;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8c4d6e;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 3px 9px;
+  border-radius: 999px;
+  pointer-events: none;
+  animation: popFade 0.65s ease-out forwards;
+}
+
+@keyframes popFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(1.08);
+  }
+}
+
+/* Flowers */
+.flowers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 30px 0 24px;
+}
+
+.flowers button {
+  border: 1px solid var(--border-soft);
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 22px 18px;
+  min-width: 116px;
+  font-size: 38px;
+  cursor: pointer;
+  color: var(--text);
+  box-shadow: 0 10px 22px rgba(198, 138, 170, 0.12);
+}
+
+.flowers button:hover {
+  border-color: var(--pink);
+  box-shadow: 0 16px 30px rgba(198, 138, 170, 0.22);
+}
+
+.flowers button.selected {
+  border-color: var(--purple);
+  background: #fff6fc;
+  box-shadow: 0 14px 28px rgba(184, 138, 201, 0.26);
+}
+
+.flowers button .emoji-3d {
+  display: inline-block;
+}
+
+.flowers span {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 10px;
+  color: #8f647b;
+}
+
+/* 3D Flip Card for Wishes & Gift */
+.flip-stage {
+  max-width: 580px;
+  margin: 18px auto 0;
+  perspective: 1100px;
+}
+
+.flip-card {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 22px;
+  padding: 24px;
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  color: #7d546b;
+  line-height: 1.8;
+  box-shadow: 0 10px 28px rgba(198, 138, 170, 0.14);
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(155deg, rgba(255, 253, 254, 0.98), rgba(252, 236, 246, 0.96));
+  border-color: rgba(184, 138, 201, 0.48);
+}
+
+.message-box {
+  max-width: 580px;
+  min-height: 74px;
+  padding: 22px 24px;
+  margin: 22px auto 0;
+  border-radius: 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  color: #845970;
+  line-height: 1.8;
+  box-shadow: 0 10px 28px rgba(198, 138, 170, 0.12);
+}
+
+/* Letter */
+.letter-card {
+  max-width: 650px;
+  margin: 26px auto 0;
+  padding: 36px;
+  border-radius: 26px;
+  background: #fffdfc;
+  border: 1px solid #f5e2ec;
+  box-shadow: 0 18px 42px rgba(198, 138, 170, 0.16);
+  text-align: left;
+  line-height: 1.95;
+  color: #6b4e61;
+}
+
+.letter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed #edd2e0;
+}
+
+.copy-feedback {
+  font-size: 12px;
+  color: #96637d;
+}
+
+/* Birthday Keepsake Stamp Input & Card */
+.stamp-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 560px;
+  margin: 20px auto 0;
+}
+
+.stamp-input {
+  flex: 1 1 260px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stamp-input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(184, 138, 201, 0.18);
+}
+
+.stamp-card {
+  max-width: 540px;
+  margin: 22px auto 0;
+  padding: 24px 26px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(255, 253, 254, 0.96), rgba(253, 238, 247, 0.94));
+  border: 1px solid rgba(217, 140, 172, 0.45);
+  box-shadow: 0 14px 32px rgba(184, 138, 201, 0.16);
+}
+
+.stamp-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a96485;
+  background: rgba(255, 232, 243, 0.92);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.stamp-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: #744e65;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.stamp-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Reminders */
+.reminders {
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+  margin: 28px auto 0;
+}
+
+.reminders button {
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: var(--card-bg);
+  color: #845970;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(198, 138, 170, 0.1);
+}
+
+.reminders button:hover {
+  border-color: var(--pink);
+  background: #fff9fc;
+}
+
+/* Candle & Gift */
+.candle {
+  font-size: 86px;
+  margin: 18px 0;
+  display: inline-block;
+  animation: float3d 2.8s infinite ease-in-out;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.candle.lit {
+  filter: drop-shadow(0 0 18px rgba(255, 196, 107, 0.75));
+}
+
+.gift {
+  display: inline-block;
+  font-size: 98px;
+  margin: 14px 0;
+  cursor: pointer;
+  user-select: none;
+  animation: float3d 2.4s infinite ease-in-out;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+}
+
+.gift:hover {
+  transform: scale(1.14) rotateY(14deg) rotateZ(4deg);
+  filter: drop-shadow(0 14px 24px rgba(184, 138, 201, 0.32));
+}
+
+footer {
+  margin-top: 52px;
+  padding: 50px 20px;
+  background: rgba(247, 232, 239, 0.88);
+  border-top: 1px solid var(--border-soft);
+  color: #966980;
+  line-height: 1.8;
+}
+
+.music-button {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  border: 1px solid var(--border-soft);
+  border-radius: 30px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  color: #9e6381;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 10px 24px rgba(157, 113, 128, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.music-button:hover {
+  transform: translateY(-2px);
+}
+
+.status-note {
+  position: fixed;
+  right: 18px;
+  bottom: 64px;
+  z-index: 30;
+  max-width: 260px;
+  font-size: 12px;
+  color: #885a72;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 8px 20px rgba(157, 113, 128, 0.14);
+}
+
+.petal {
+  position: fixed;
+  top: -30px;
+  z-index: 12;
+  pointer-events: none;
+  animation: fall3d linear forwards;
+}
+
+@keyframes fall3d {
+  0% {
+    transform: translateY(0) rotateX(0deg) rotateZ(0deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(112vh) rotateX(420deg) rotateZ(620deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float3d {
+  0%, 100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotateY(10deg);
+  }
+}
+
+@keyframes gentleWave {
+  0%, 100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes pulseBadge {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.08ms !important;
+    scroll-behavior: auto !important;
+  }
+  .section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    margin: 20px 12px;
+    padding: 46px 18px;
+  }
+  .letter-card {
+    padding: 24px;
+  }
+  .game-arena {
+    height: 270px;
+  }
+  .timer {
+    gap: 8px;
+  }
+  .timer div {
+    min-width: 68px;
+    padding: 14px 8px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- COUNTDOWN -->
+<section id="countdownScreen" class="screen">
+  <div class="count-card tilt-inner" data-tilt="7">
+    <div class="small-badge">✦</div>
+    <p class="eyebrow">COUNTING DOWN TO CELEBRATION</p>
+    <h1>Something fun is<br>almost ready, Anna.</h1>
+    <p>A little birthday corner put together just to celebrate you.</p>
+
+    <div class="timer" aria-label="Birthday countdown">
+      <div><strong id="days">00</strong><span>Days</span></div>
+      <div><strong id="hours">00</strong><span>Hours</span></div>
+      <div><strong id="minutes">00</strong><span>Minutes</span></div>
+      <div><strong id="seconds">00</strong><span>Seconds</span></div>
+    </div>
+    <p class="eyebrow">GOOD FRIENDS &amp; GOOD VIBES INCOMING</p>
+  </div>
+</section>
+
+<!-- BIRTHDAY WORLD -->
+<main id="birthdayScreen" class="hidden">
+
+  <nav class="top-nav" aria-label="Page sections">
+    <a href="#vibe">Today's Vibe</a>
+    <a href="#arcade">Mini-Game</a>
+    <a href="#garden">Wishes</a>
+    <a href="#letter">Note</a>
+    <a href="#keepsake">Goal Stamp</a>
+    <a href="#reminders">Reminders</a>
+    <a href="#wish">Wish</a>
+    <a href="#gift-box">Surprise</a>
+  </nav>
+
+  <header class="hero" id="heroParallax">
+    <p class="eyebrow parallax-layer" data-depth="12">TODAY IS ALL ABOUT GOOD ENERGY</p>
+    <h1 class="parallax-layer" data-depth="24">Happy Birthday,<br><span>Anna!</span></h1>
+    <p class="parallax-layer" data-depth="14">Wishing you a day packed with good laughs, great moments,<br>and everything that makes you genuinely happy.</p>
+    <div class="flower-decoration parallax-layer" data-depth="30" aria-hidden="true">🌷 ✨ 🌸</div>
+    <button type="button" class="primary parallax-layer" data-depth="18" onclick="showLetter()">Read your birthday note</button>
+  </header>
+
+  <!-- TODAY'S BIRTHDAY VIBE -->
+  <section class="section" id="vibe">
+    <p class="eyebrow">INTERACTIVE BIRTHDAY PLANNER</p>
+    <h2>What's today's birthday vibe?</h2>
+    <p>Pick a mood to generate a fun mini-idea or side quest for your day.</p>
+
+    <div class="vibe-pills" role="group" aria-label="Birthday mood options">
+      <button type="button" class="vibe-pill" onclick="pickVibe('chill', this)">☁️ Chill &amp; Cozy</button>
+      <button type="button" class="vibe-pill" onclick="pickVibe('hype', this)">⚡ Hype &amp; Adventurous</button>
+      <button type="button" class="vibe-pill" onclick="pickVibe('treats', this)">🍰 Food &amp; Treats</button>
+      <button type="button" class="vibe-pill" onclick="pickVibe('main', this)">✨ Main Character</button>
+    </div>
+
+    <div class="message-box" id="vibeBox" aria-live="polite">
+      Tap a vibe pill above to see today's birthday idea.
+    </div>
+  </section>
+
+  <!-- 30-SECOND MINI-GAME -->
+  <section class="section" id="arcade">
+    <p class="eyebrow">30-SECOND BIRTHDAY ARCADE</p>
+    <h2>Catch the Birthday Goodies</h2>
+    <p>Tap 🍰, 🎁, ⭐, and 🎈 for points—and dodge 💣!</p>
+
+    <div class="game-hud" aria-live="polite">
+      <div class="hud-pill">Score: <span id="gameScore">0</span></div>
+      <div class="hud-pill">Best: <span id="gameBest">0</span></div>
+      <div class="hud-pill">Time: <span id="gameTime">30</span>s</div>
+    </div>
+
+    <div class="game-arena" id="gameArena" aria-label="Birthday goodie catch game area"></div>
+
+    <button type="button" class="primary" id="startGameBtn" onclick="startGoodieGame()">Start 30s Game 🎮</button>
+    <div class="message-box" id="gameStatusBox" aria-live="polite">
+      Press "Start 30s Game" to play.
+    </div>
+  </section>
+
+  <!-- GARDEN WITH 3D TILT + 3D FLIP WISH CARD -->
+  <section class="section" id="garden">
+    <p class="eyebrow">A GARDEN OF BIRTHDAY WISHES</p>
+    <h2>Pick a flower, Anna.</h2>
+    <p>Tap any flower to flip the 3D wish card and pull a fresh birthday wish.</p>
+
+    <div class="flowers">
+      <button type="button" class="tilt-inner" data-tilt="14" onclick="revealWish('wishes', this)">
+        <span class="emoji-3d">🌷</span><span>Flower One</span>
+      </button>
+      <button type="button" class="tilt-inner" data-tilt="14" onclick="revealWish('wishes', this)">
+        <span class="emoji-3d">🌻</span><span>Flower Two</span>
+      </button>
+      <button type="button" class="tilt-inner" data-tilt="14" onclick="revealWish('wishes', this)">
+        <span class="emoji-3d">🌸</span><span>Flower Three</span>
+      </button>
+      <button type="button" class="tilt-inner" data-tilt="14" onclick="revealWish('wishes', this)">
+        <span class="emoji-3d">🌼</span><span>Flower Four</span>
+      </button>
+    </div>
+
+    <div class="flip-stage">
+      <div class="flip-card" id="wishFlipCard">
+        <div class="flip-face flip-front">
+          Your 3D wish card is ready—pick any flower above to flip it open.
+        </div>
+        <div class="flip-face flip-back" aria-live="polite">
+          <p id="messageBox">Wishing you an awesome birthday!</p>
+          <button type="button" class="ghost-btn" onclick="cycleCurrentWish()">Draw another wish ↻</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section class="section" id="letter">
+    <p class="eyebrow">A NOTE FROM A FRIEND</p>
+    <h2>Hey Anna,</h2>
+    <div class="letter-card tilt-inner" data-tilt="4">
+      <div id="letterBody">
+        <p>
+          Happy birthday! It is really nice having a friend who brings good energy,
+          easy laughs, and real kindness into everyday life.
+        </p>
+        <p>
+          I hope this new year brings you exciting wins, great memories, steady peace,
+          and plenty of days that feel effortless in the best way.
+        </p>
+        <p>
+          Keep chasing what matters to you, enjoy every milestone along the way, and
+          have an awesome birthday today.
+        </p>
+        <p><strong>Cheers to another great year ahead, Anna.</strong></p>
+      </div>
+      <div class="letter-actions">
+        <button type="button" class="ghost-btn" onclick="copyBirthdayNote()">Copy birthday note 📋</button>
+        <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIRTHDAY KEEPSAKE GOAL STAMP -->
+  <section class="section" id="keepsake">
+    <p class="eyebrow">YEAR AHEAD STAMP</p>
+    <h2>Stamp a birthday goal or memory</h2>
+    <p>Type a goal, trip idea, or fun highlight for your year ahead and stamp it onto a 3D keepsake card.</p>
+
+    <div class="stamp-controls">
+      <input
+        type="text"
+        id="stampInput"
+        class="stamp-input"
+        maxlength="110"
+        placeholder="e.g., Learn a new skill, take a weekend trip..."
+        aria-label="Your birthday goal or memory"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();stampGoal();}"
+      >
+      <button type="button" class="primary" onclick="stampGoal()">Stamp Card ✨</button>
+    </div>
+
+    <div class="stamp-card tilt-inner" id="stampCard" data-tilt="8" aria-live="polite">
+      <div class="stamp-badge">Anna's New Year Stamp</div>
+      <div class="stamp-quote" id="stampText">"Start this year with big energy and good momentum."</div>
+      <p id="stampSubtext">Tap "Stamp Card" above to customize it.</p>
+      <div class="stamp-actions">
+        <button type="button" class="ghost-btn" onclick="downloadStampPng()">Download Stamp (PNG) ⬇</button>
+        <span class="copy-feedback" id="stampDownloadStatus" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- REMINDERS -->
+  <section class="section" id="reminders">
+    <p class="eyebrow">QUICK PICK-ME-UPS</p>
+    <h2>Open a little reminder.</h2>
+
+    <div class="reminders">
+      <button type="button" class="tilt-inner" data-tilt="8" onclick="revealReminder('smile', this)">😄 When you want a quick laugh or smile</button>
+      <button type="button" class="tilt-inner" data-tilt="8" onclick="revealReminder('strength', this)">⚡ When you need a boost of confidence</button>
+      <button type="button" class="tilt-inner" data-tilt="8" onclick="revealReminder('hope', this)">🌅 When you're looking forward to what's next</button>
+    </div>
+    <div class="message-box" id="reminderBox" aria-live="polite">
+      Tap a button above whenever you want a reminder.
+    </div>
+  </section>
+
+  <!-- CANDLE -->
+  <section class="section" id="wish">
+    <p class="eyebrow">MAKE A WISH</p>
+    <h2>One candle. One big goal.</h2>
+    <div class="candle lit" id="candle" aria-hidden="true">🕯️</div>
+    <p>Think of something exciting for this year, then tap below.</p>
+    <button type="button" class="primary" onclick="blowCandle()">Make the wish ✨</button>
+    <div class="message-box" id="candleMessage" aria-live="polite">
+      Your wish is waiting to be made.
+    </div>
+  </section>
+
+  <!-- GIFT WITH 3D FLIP -->
+  <section class="section" id="gift-box">
+    <p class="eyebrow">BONUS UNBOXING</p>
+    <h2>A little virtual gift for you</h2>
+    <div class="gift" id="giftIcon" role="button" tabindex="0" aria-label="Open birthday gift" onclick="openGift()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGift();}">🎁</div>
+    <p>Tap the gift to unbox a birthday surprise.</p>
+
+    <div class="flip-stage">
+      <div class="flip-card" id="giftFlipCard">
+        <div class="flip-face flip-front">
+          Tap the gift box above to unwrap your virtual birthday note.
+        </div>
+        <div class="flip-face flip-back" aria-live="polite">
+          <p id="giftMessage">Unwrapped!</p>
+          <button type="button" class="ghost-btn" onclick="openGift()">Open another note 🎁</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Made as a birthday shoutout for Anna.
+    <p>Here's to good friends, big dreams, and a great year ahead.</p>
+  </footer>
+
+</main>
+
+<button id="musicButton" type="button" class="music-button hidden" onclick="toggleMusic()">♫ Play music</button>
+<div id="musicStatus" class="status-note hidden" role="status" aria-live="polite"></div>
+<audio id="birthdayMusic" loop></audio>
+
+<script>
+/* ===================================
+   PRIVATE WEBSITE SETTINGS
+   EDIT THESE VALUES IN THIS CODE.
+   =================================== */
+
+const CONFIG = {
+  birthdayDate: "2026-11-19",
+  unlockTime: "16:24",
+  audioFile: "birthday-song.mp3",
+  audioVolume: 0.35
+};
+
+/* ===================================
+   FRIENDLY BIRTHDAY MESSAGE POOLS
+   =================================== */
+
+const messagePools = {
+  wishes: [
+    "Wishing you a year full of fun plans, great company, and zero dull moments. ✨",
+    "May solid opportunities and good surprises come your way this year.",
+    "Hope your birthday is packed with genuine laughs and great food.",
+    "Wishing you good health, clear focus, and plenty to celebrate.",
+    "Here's to a year where your biggest goals start feeling very real.",
+    "May every new chapter bring cool adventures and memorable stories.",
+    "You bring great energy into the room—hope today gives plenty back to you.",
+    "Wishing you more good days, great music, and easy wins ahead. 🌟",
+    "Hope this year takes you to cool places and introduces great people.",
+    "Wishing you an awesome birthday and an even better year ahead."
+  ],
+
+  smile: [
+    "Good friends make life better—and today is a great day to celebrate you.",
+    "Hope something unexpectedly funny happens today and ruins your poker face.",
+    "Even busy weeks have bright spots. Enjoy today to the fullest. ☀️",
+    "A good laugh is undefeated—hope you get plenty of them today.",
+    "Today is a solid excuse to treat yourself to something you like."
+  ],
+
+  strength: [
+    "You've handled plenty of tough moments already—you've got what it takes.",
+    "One slow or frustrating day doesn't define the whole run.",
+    "Progress doesn't have to be loud to count. Keep moving forward.",
+    "You're allowed to learn, adjust, and grow at your own pace.",
+    "Backing yourself goes a long way—you're more capable than you think. ⚡"
+  ],
+
+  hope: [
+    "Good things take time to line up. Trust the process and keep going.",
+    "Some of your best stories and favorite memories haven't even happened yet.",
+    "Every new day is a fresh reset button. 🌅",
+    "There's still plenty of exciting ground ahead of you this year.",
+    "Stay curious—your next favorite chapter could start sooner than you expect."
+  ],
+
+  gifts: [
+    "Virtual gift unlocked: unlimited good vibes and a great year ahead. 🎉",
+    "If I could wrap up great music, good coffee, and zero stress, it'd be right here.",
+    "Consider this a reminder that good friends are rooting for your wins.",
+    "Here's to great memories, inside jokes, and big milestones this year.",
+    "A birthday box of good luck and good times—open whenever you need it. 🎁"
+  ],
+
+  vibes: {
+    chill: [
+      "Cozy side quest: put on a great playlist, grab your favorite drink, and take zero pressure off today.",
+      "Low-key birthday energy: slow mornings, good tunes, and relaxing with zero guilt."
+    ],
+    hype: [
+      "High-energy side quest: try a new spot, plan a spontaneous hangout, or start a bold new goal today.",
+      "Big-energy birthday mode: make a memory today you'll still be laughing about next year."
+    ],
+    treats: [
+      "Official birthday rule: dessert or your favorite comfort food is mandatory today. 🍰",
+      "Treat-yourself mission: find your favorite snack or drink and enjoy every bite."
+    ],
+    main: [
+      "Main-character energy: step into today knowing people are genuinely glad you're around. ✨",
+      "Spotlight mode: take the good photos, enjoy the birthday shoutouts, and own the day."
+    ]
+  }
+};
+
+/* PREVENT REPEATED MESSAGES UNTIL POOL IS EXHAUSTED */
+
+const usedMessages = {};
+
+function getFreshMessage(category) {
+  const pool = messagePools[category];
+
+  if (!usedMessages[category] || usedMessages[category].length >= pool.length) {
+    usedMessages[category] = [];
+  }
+
+  const unusedIndices = pool
+    .map((_, index) => index)
+    .filter((index) => !usedMessages[category].includes(index));
+
+  const selectedIndex = unusedIndices[Math.floor(Math.random() * unusedIndices.length)];
+  usedMessages[category].push(selectedIndex);
+  return pool[selectedIndex];
+}
+
+function animateBox(box) {
+  box.animate(
+    [
+      { opacity: 0.2, transform: "translateY(8px)" },
+      { opacity: 1, transform: "translateY(0)" }
+    ],
+    { duration: 350, easing: "ease-out" }
+  );
+}
+
+/* VIBE SELECTOR */
+
+function pickVibe(vibeKey, buttonEl) {
+  document.querySelectorAll(".vibe-pill").forEach((pill) => pill.classList.remove("active"));
+  if (buttonEl) buttonEl.classList.add("active");
+
+  const options = messagePools.vibes[vibeKey] || messagePools.vibes.chill;
+  const box = document.getElementById("vibeBox");
+  box.textContent = options[Math.floor(Math.random() * options.length)];
+  animateBox(box);
+}
+
+/* BIRTHDAY KEEPSAKE GOAL STAMP & PNG DOWNLOAD */
+
+function stampGoal() {
+  const input = document.getElementById("stampInput");
+  const quoteEl = document.getElementById("stampText");
+  const subEl = document.getElementById("stampSubtext");
+  const card = document.getElementById("stampCard");
+
+  const cleanText = input.value.trim();
+  if (!cleanText) {
+    subEl.textContent = "Type a goal or memory first, then tap Stamp Card.";
+    return;
+  }
+
+  quoteEl.textContent = `"${cleanText}"`;
+  subEl.textContent = "Stamped for Anna's year ahead ★";
+  input.value = "";
+
+  card.animate(
+    [
+      { transform: "scale(0.96) rotateY(-8deg)" },
+      { transform: "scale(1.02) rotateY(4deg)" },
+      { transform: "scale(1) rotateY(0deg)" }
+    ],
+    { duration: 420, easing: "ease-out" }
+  );
+
+  makeConfetti();
+}
+
+function drawRoundedRect(ctx, x, y, w, h, r) {
+  if (typeof ctx.roundRect === "function") {
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, r);
+    return;
+  }
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.closePath();
+}
+
+function wrapCanvasText(ctx, text, maxWidth) {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines = [];
+  let currentLine = "";
+
+  for (const word of words) {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+    if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = testLine;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines.length ? lines : [text];
+}
+
+async function downloadStampPng() {
+  const statusEl = document.getElementById("stampDownloadStatus");
+  const quoteText = document.getElementById("stampText").textContent.trim();
+  const subText = document.getElementById("stampSubtext").textContent.trim();
+
+  if (document.fonts && document.fonts.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      // Ignore font readiness errors and draw with available fonts
+    }
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 680;
+  const ctx = canvas.getContext("2d");
+
+  const bgGrad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  bgGrad.addColorStop(0, "#fff7f5");
+  bgGrad.addColorStop(0.55, "#fceaf2");
+  bgGrad.addColorStop(1, "#f4e8ff");
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const pad = 48;
+  const cardW = canvas.width - pad * 2;
+  const cardH = canvas.height - pad * 2;
+  ctx.save();
+  drawRoundedRect(ctx, pad, pad, cardW, cardH, 38);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.88)";
+  ctx.fill();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "rgba(217, 140, 172, 0.55)";
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.fillStyle = "#b57191";
+  ctx.font = "600 20px 'DM Sans', sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("ANNA'S BIRTHDAY KEEPSAKE STAMP ★", canvas.width / 2, 155);
+
+  ctx.fillStyle = "#6e4c61";
+  ctx.font = "italic 600 40px 'Playfair Display', Georgia, serif";
+  const lines = wrapCanvasText(ctx, quoteText, cardW - 140);
+  const lineHeight = 54;
+  const startY = 305 - ((lines.length - 1) * lineHeight) / 2;
+
+  lines.forEach((line, idx) => {
+    ctx.fillText(line, canvas.width / 2, startY + idx * lineHeight);
+  });
+
+  ctx.fillStyle = "#8c6279";
+  ctx.font = "500 22px 'DM Sans', sans-serif";
+  ctx.fillText(subText, canvas.width / 2, 495);
+
+  ctx.fillStyle = "#b2879d";
+  ctx.font = "400 17px 'DM Sans', sans-serif";
+  ctx.fillText("Happy Birthday, Anna!", canvas.width / 2, 550);
+
+  const link = document.createElement("a");
+  link.download = "anna-birthday-stamp.png";
+  link.href = canvas.toDataURL("image/png");
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  statusEl.textContent = "Downloaded anna-birthday-stamp.png!";
+  setTimeout(() => {
+    statusEl.textContent = "";
+  }, 2800);
+}
+
+/* 30-SECOND BIRTHDAY GOODIE CATCH MINI-GAME */
+
+let gameActive = false;
+let gameScore = 0;
+let gameTimeLeft = 30;
+let gameBest = Number(localStorage.getItem("annaBirthdayGameBest") || 0);
+let gameTimerInterval = null;
+let gameSpawnInterval = null;
+let gameRafId = null;
+let activeFallingItems = [];
+
+document.getElementById("gameBest").textContent = String(gameBest);
+
+const GOODIE_TYPES = [
+  { emoji: "🍰", points: 10, label: "+10" },
+  { emoji: "🎁", points: 15, label: "+15" },
+  { emoji: "⭐", points: 20, label: "+20" },
+  { emoji: "🎈", points: 10, label: "+10" },
+  { emoji: "💣", points: -10, label: "-10" }
+];
+
+function spawnPopTag(arena, x, y, text) {
+  const tag = document.createElement("span");
+  tag.className = "pop-tag";
+  tag.textContent = text;
+  tag.style.left = `${Math.max(12, Math.min(arena.clientWidth - 48, x))}px`;
+  tag.style.top = `${Math.max(12, Math.min(arena.clientHeight - 36, y))}px`;
+  arena.appendChild(tag);
+  setTimeout(() => tag.remove(), 650);
+}
+
+function spawnFallingGoodie() {
+  if (!gameActive) return;
+  const arena = document.getElementById("gameArena");
+  const roll = Math.random();
+  const type = roll < 0.18
+    ? GOODIE_TYPES[4]
+    : GOODIE_TYPES[Math.floor(Math.random() * 4)];
+
+  const el = document.createElement("button");
+  el.type = "button";
+  el.className = "falling-item";
+  el.textContent = type.emoji;
+  el.setAttribute("aria-label", type.points > 0 ? `Catch ${type.emoji}` : "Avoid bomb");
+
+  const maxX = Math.max(24, arena.clientWidth - 48);
+  const startX = 12 + Math.random() * maxX;
+  const speed = 1.6 + Math.random() * 1.9;
+  const spinSpeed = (Math.random() - 0.5) * 4;
+
+  const itemObj = {
+    el,
+    x: startX,
+    y: -38,
+    speed,
+    angle: 0,
+    spinSpeed,
+    points: type.points,
+    label: type.label,
+    caught: false
+  };
+
+  el.style.left = `${itemObj.x}px`;
+  el.style.top = `${itemObj.y}px`;
+
+  const handleCatch = (e) => {
+    e.stopPropagation();
+    if (!gameActive || itemObj.caught) return;
+    itemObj.caught = true;
+    gameScore = Math.max(0, gameScore + itemObj.points);
+    document.getElementById("gameScore").textContent = String(gameScore);
+    spawnPopTag(arena, itemObj.x, itemObj.y, itemObj.label);
+    el.remove();
+    activeFallingItems = activeFallingItems.filter((it) => it !== itemObj);
+  };
+
+  el.addEventListener("pointerdown", handleCatch);
+  el.addEventListener("click", handleCatch);
+
+  arena.appendChild(el);
+  activeFallingItems.push(itemObj);
+}
+
+function stepGameLoop() {
+  if (!gameActive) return;
+  const arena = document.getElementById("gameArena");
+  const height = arena.clientHeight;
+
+  const remaining = [];
+  for (const item of activeFallingItems) {
+    if (item.caught) continue;
+    item.y += item.speed;
+    item.angle += item.spinSpeed;
+    item.el.style.top = `${item.y}px`;
+    item.el.style.transform = `rotateY(${item.angle}deg) rotateZ(${item.angle * 0.35}deg)`;
+
+    if (item.y < height + 10) {
+      remaining.push(item);
+    } else {
+      item.el.remove();
+    }
+  }
+  activeFallingItems = remaining;
+  gameRafId = requestAnimationFrame(stepGameLoop);
+}
+
+function endGoodieGame() {
+  gameActive = false;
+  clearInterval(gameTimerInterval);
+  clearInterval(gameSpawnInterval);
+  cancelAnimationFrame(gameRafId);
+
+  activeFallingItems.forEach((it) => it.el.remove());
+  activeFallingItems = [];
+
+  if (gameScore > gameBest) {
+    gameBest = gameScore;
+    localStorage.setItem("annaBirthdayGameBest", String(gameBest));
+    document.getElementById("gameBest").textContent = String(gameBest);
+  }
+
+  const startBtn = document.getElementById("startGameBtn");
+  startBtn.disabled = false;
+  startBtn.textContent = "Play Again 🎮";
+
+  let rank = "Birthday Warm-Up";
+  if (gameScore >= 180) rank = "Arcade Champion 🏆";
+  else if (gameScore >= 100) rank = "Party Pro 🌟";
+  else if (gameScore >= 40) rank = "Goodie Hunter 🎉";
+
+  const statusBox = document.getElementById("gameStatusBox");
+  statusBox.textContent = `Time's up! Final score: ${gameScore} — Rank: ${rank}.`;
+  animateBox(statusBox);
+  makeConfetti();
+}
+
+function startGoodieGame() {
+  if (gameActive) return;
+
+  gameActive = true;
+  gameScore = 0;
+  gameTimeLeft = 30;
+  activeFallingItems.forEach((it) => it.el.remove());
+  activeFallingItems = [];
+
+  document.getElementById("gameScore").textContent = "0";
+  document.getElementById("gameTime").textContent = "30";
+  document.getElementById("gameStatusBox").textContent = "Go! Tap the treats and stars!";
+
+  const startBtn = document.getElementById("startGameBtn");
+  startBtn.disabled = true;
+  startBtn.textContent = "Game in progress...";
+
+  spawnFallingGoodie();
+  gameSpawnInterval = setInterval(spawnFallingGoodie, 620);
+
+  gameTimerInterval = setInterval(() => {
+    gameTimeLeft -= 1;
+    document.getElementById("gameTime").textContent = String(Math.max(0, gameTimeLeft));
+    if (gameTimeLeft <= 0) {
+      endGoodieGame();
+    }
+  }, 1000);
+
+  gameRafId = requestAnimationFrame(stepGameLoop);
+}
+
+/* COPY BIRTHDAY NOTE */
+
+async function copyBirthdayNote() {
+  const feedback = document.getElementById("copyFeedback");
+  const rawText = document.getElementById("letterBody").innerText.trim();
+
+  try {
+    await navigator.clipboard.writeText(rawText);
+    feedback.textContent = "Copied to clipboard!";
+  } catch {
+    feedback.textContent = "Select and copy the note above.";
+  }
+
+  setTimeout(() => {
+    feedback.textContent = "";
+  }, 2600);
+}
+
+/* 3D FLIP WISH CARD */
+
+let currentWishCategory = "wishes";
+
+function revealWish(category, buttonEl = null) {
+  currentWishCategory = category;
+  if (buttonEl) {
+    document.querySelectorAll(".flowers button").forEach((btn) => btn.classList.remove("selected"));
+    buttonEl.classList.add("selected");
+  }
+
+  const flipCard = document.getElementById("wishFlipCard");
+  const msgEl = document.getElementById("messageBox");
+  const nextText = getFreshMessage(category);
+
+  if (flipCard.classList.contains("is-flipped")) {
+    flipCard.classList.remove("is-flipped");
+    setTimeout(() => {
+      msgEl.textContent = nextText;
+      flipCard.classList.add("is-flipped");
+    }, 220);
+  } else {
+    msgEl.textContent = nextText;
+    flipCard.classList.add("is-flipped");
+  }
+}
+
+function cycleCurrentWish() {
+  revealWish(currentWishCategory, null);
+}
+
+/* REMINDERS */
+
+function revealReminder(category) {
+  const box = document.getElementById("reminderBox");
+  box.textContent = getFreshMessage(category);
+  animateBox(box);
+}
+
+function showLetter() {
+  const letterSec = document.getElementById("letter");
+  letterSec.classList.add("visible");
+  letterSec.scrollIntoView({ behavior: "smooth" });
+}
+
+/* CANDLE */
+
+function blowCandle() {
+  const candle = document.getElementById("candle");
+  candle.textContent = "✨";
+  candle.classList.remove("lit");
+  candle.style.transform = "scale(1.18) rotate(12deg)";
+  setTimeout(() => {
+    candle.style.transform = "";
+  }, 450);
+
+  const box = document.getElementById("candleMessage");
+  box.textContent = "Wish locked in! Here's to making it happen this year. 🌟";
+  animateBox(box);
+  makeConfetti();
+}
+
+/* GIFT WITH 3D FLIP */
+
+function openGift() {
+  const flipCard = document.getElementById("giftFlipCard");
+  const giftMsg = document.getElementById("giftMessage");
+  const giftIcon = document.getElementById("giftIcon");
+  const nextText = getFreshMessage("gifts");
+
+  giftIcon.textContent = "🎉";
+
+  if (flipCard.classList.contains("is-flipped")) {
+    flipCard.classList.remove("is-flipped");
+    setTimeout(() => {
+      giftMsg.textContent = nextText;
+      flipCard.classList.add("is-flipped");
+    }, 220);
+  } else {
+    giftMsg.textContent = nextText;
+    flipCard.classList.add("is-flipped");
+  }
+
+  makeConfetti();
+}
+
+/* 3D POINTER TILT, HOLOGRAPHIC SHEEN & PARALLAX */
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!prefersReducedMotion) {
+  document.querySelectorAll(".tilt-inner").forEach((el) => {
+    const maxTilt = Number(el.dataset.tilt) || 10;
+    let rafPending = false;
+    let lastEvent = null;
+
+    const applyTilt = () => {
+      rafPending = false;
+      if (!lastEvent) return;
+      const rect = el.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const px = Math.min(1, Math.max(0, (lastEvent.clientX - rect.left) / rect.width));
+      const py = Math.min(1, Math.max(0, (lastEvent.clientY - rect.top) / rect.height));
+      const rotateY = (px - 0.5) * maxTilt * 2;
+      const rotateX = -(py - 0.5) * maxTilt * 2;
+      el.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px)`;
+      el.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      el.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+      el.style.setProperty("--sheen", "1");
+    };
+
+    el.addEventListener("pointermove", (e) => {
+      lastEvent = e;
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(applyTilt);
+      }
+    });
+
+    el.addEventListener("pointerleave", () => {
+      lastEvent = null;
+      el.style.transform = "";
+      el.style.setProperty("--sheen", "0");
+    });
+  });
+
+  const hero = document.getElementById("heroParallax");
+  if (hero) {
+    hero.addEventListener("pointermove", (e) => {
+      const rect = hero.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const nx = (e.clientX - rect.left) / rect.width - 0.5;
+      const ny = (e.clientY - rect.top) / rect.height - 0.5;
+      hero.querySelectorAll(".parallax-layer").forEach((layer) => {
+        const depth = Number(layer.dataset.depth) || 15;
+        const tx = (-nx * depth).toFixed(1);
+        const ty = (-ny * depth * 0.7).toFixed(1);
+        layer.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+      });
+    });
+
+    hero.addEventListener("pointerleave", () => {
+      hero.querySelectorAll(".parallax-layer").forEach((layer) => {
+        layer.style.transform = "";
+      });
+    });
+  }
+}
+
+/* SCROLL PROGRESS & SECTION REVEAL */
+
+const allSections = [...document.querySelectorAll(".section")];
+
+function revealVisibleSections() {
+  const triggerBottom = window.innerHeight * 0.95;
+  allSections.forEach((sec) => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top < triggerBottom || rect.bottom > 0 && rect.top < window.innerHeight) {
+      sec.classList.add("visible");
+    }
+  });
+}
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.08 }
+  );
+  allSections.forEach((sec) => observer.observe(sec));
+} else {
+  allSections.forEach((sec) => sec.classList.add("visible"));
+}
+
+const navLinks = document.querySelectorAll(".top-nav a");
+const trackedSections = [...navLinks]
+  .map((a) => document.querySelector(a.getAttribute("href")))
+  .filter(Boolean);
+
+function updateScrollUI() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+  document.getElementById("scrollProgress").style.width = `${pct}%`;
+
+  let activeId = "";
+  for (const sec of trackedSections) {
+    const top = sec.getBoundingClientRect().top;
+    if (top <= 180) activeId = sec.id;
+  }
+  navLinks.forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("href") === `#${activeId}`);
+  });
+
+  revealVisibleSections();
+}
+
+window.addEventListener("scroll", updateScrollUI, { passive: true });
+window.addEventListener("hashchange", revealVisibleSections);
+
+/* FLOATING FLOWERS AND CONFETTI */
+
+function createPetal() {
+  const item = document.createElement("span");
+  const symbols = ["🌸", "✨", "🌷", "✿", "🎉"];
+
+  item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+  item.className = "petal";
+  item.style.left = Math.random() * 100 + "vw";
+  item.style.animationDuration = (7 + Math.random() * 6) + "s";
+  item.style.fontSize = (12 + Math.random() * 14) + "px";
+
+  document.body.appendChild(item);
+  setTimeout(() => item.remove(), 14000);
+}
+
+function makeConfetti() {
+  const symbols = ["🎉", "✨", "🌸", "🌟", "🎊"];
+
+  for (let i = 0; i < 24; i++) {
+    const item = document.createElement("span");
+    item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    item.className = "petal";
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.animationDuration = (3 + Math.random() * 4) + "s";
+    item.style.fontSize = (14 + Math.random() * 16) + "px";
+    document.body.appendChild(item);
+    setTimeout(() => item.remove(), 7500);
+  }
+}
+
+setInterval(createPetal, 950);
+
+/* COUNTDOWN */
+
+function getBirthdayTime() {
+  const [year, month, day] = CONFIG.birthdayDate.split("-").map(Number);
+  const [hour, minute] = CONFIG.unlockTime.split(":").map(Number);
+  return new Date(year, month - 1, day, hour, minute, 0);
+}
+
+let unlockedOnce = false;
+
+function updateCountdown() {
+  const difference = getBirthdayTime() - new Date();
+
+  if (difference <= 0) {
+    document.getElementById("countdownScreen").classList.add("hidden");
+    document.getElementById("birthdayScreen").classList.remove("hidden");
+    document.getElementById("musicButton").classList.remove("hidden");
+
+    revealVisibleSections();
+    updateScrollUI();
+
+    clearInterval(countdownInterval);
+    if (!unlockedOnce) {
+      unlockedOnce = true;
+      makeConfetti();
+    }
+    return;
+  }
+
+  document.getElementById("days").textContent =
+    String(Math.floor(difference / 86400000)).padStart(2, "0");
+  document.getElementById("hours").textContent =
+    String(Math.floor(difference / 3600000) % 24).padStart(2, "0");
+  document.getElementById("minutes").textContent =
+    String(Math.floor(difference / 60000) % 60).padStart(2, "0");
+  document.getElementById("seconds").textContent =
+    String(Math.floor(difference / 1000) % 60).padStart(2, "0");
+}
+
+const countdownInterval = setInterval(updateCountdown, 1000);
+updateCountdown();
+
+/* MUSIC */
+
+const music = document.getElementById("birthdayMusic");
+const musicButton = document.getElementById("musicButton");
+const musicStatus = document.getElementById("musicStatus");
+
+music.src = CONFIG.audioFile;
+music.volume = Math.max(0, Math.min(1, CONFIG.audioVolume));
+
+let musicPlaying = false;
+
+async function toggleMusic() {
+  if (!CONFIG.audioFile) {
+    musicStatus.classList.remove("hidden");
+    musicStatus.textContent = "Set an audioFile name in CONFIG to play music.";
+    return;
+  }
+
+  if (!musicPlaying) {
+    try {
+      await music.play();
+      musicPlaying = true;
+      musicButton.textContent = "♫ Pause music";
+      musicStatus.classList.add("hidden");
+      musicStatus.textContent = "";
+    } catch (error) {
+      musicStatus.classList.remove("hidden");
+      musicStatus.textContent = `Could not play "${CONFIG.audioFile}"—make sure the file is next to index.html.`;
+    }
+  } else {
+    music.pause();
+    musicPlaying = false;
+    musicButton.textContent = "♫ Play music";
+  }
+}
+</script>
+
+</body>
+</html>
