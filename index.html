@@ -221,6 +221,8 @@ p {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .ghost-btn:hover {
@@ -277,6 +279,50 @@ p {
 .section.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+/* Responsive Vertical Short Embed */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 9 / 16;
+  margin: 24px auto 0;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 253, 254, 0.92);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 14px 34px rgba(182, 125, 154, 0.16);
+}
+
+.video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #7d546b;
+  background: linear-gradient(150deg, rgba(255, 247, 250, 0.95), rgba(248, 236, 252, 0.95));
+}
+
+.video-fallback {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #875b73;
+}
+
+.video-fallback a {
+  color: #9e567a;
+  font-weight: 600;
 }
 
 /* 3D Tilt Cards + Holographic Sheen */
@@ -816,15 +862,14 @@ footer {
     <div class="small-badge">✦</div>
     <p class="eyebrow">COUNTING DOWN TO CELEBRATION</p>
     <h1>Something fun is<br>almost ready, Anna.</h1>
-    <p>A little birthday corner put together just to celebrate you.</p>
-
+  
     <div class="timer" aria-label="Birthday countdown">
       <div><strong id="days">00</strong><span>Days</span></div>
       <div><strong id="hours">00</strong><span>Hours</span></div>
       <div><strong id="minutes">00</strong><span>Minutes</span></div>
       <div><strong id="seconds">00</strong><span>Seconds</span></div>
     </div>
-    <p class="eyebrow">GOOD FRIENDS &amp; GOOD VIBES INCOMING</p>
+       
   </div>
 </section>
 
@@ -833,6 +878,7 @@ footer {
 
   <nav class="top-nav" aria-label="Page sections">
     <a href="#vibe">Today's Vibe</a>
+    <a href="#video-clip">Video</a>
     <a href="#arcade">Mini-Game</a>
     <a href="#garden">Wishes</a>
     <a href="#letter">Note</a>
@@ -866,6 +912,23 @@ footer {
     <div class="message-box" id="vibeBox" aria-live="polite">
       Tap a vibe pill above to see today's birthday idea.
     </div>
+  </section>
+
+  <!-- YOUTUBE VIDEO SECTION -->
+  <section class="section" id="video-clip">
+    <p class="eyebrow">SPECIAL CLIP</p>
+    <h2>A birthday watch for Anna</h2>
+    <p>A special birthday Short picked for your celebration.</p>
+
+    <div class="video-wrap" id="ytContainer">
+      <div class="video-placeholder" id="ytPlaceholder">
+        <p><strong>Loading birthday video...</strong></p>
+        <p>If it doesn't appear in a moment, use the direct YouTube link below.</p>
+      </div>
+    </div>
+    <p class="video-fallback" id="ytFallbackWrap">
+      Trouble playing in the frame? <a id="ytDirectLink" href="https://youtube.com/shorts/P005J8HRBGw" target="_blank" rel="noopener noreferrer">Watch directly on YouTube</a>.
+    </p>
   </section>
 
   <!-- 30-SECOND MINI-GAME -->
@@ -1044,11 +1107,49 @@ footer {
    =================================== */
 
 const CONFIG = {
-  birthdayDate: "2026-11-30",
-  unlockTime: "24:00",
+  birthdayDate: "2026-11-25",
+  unlockTime: "16:37",
+  timezoneOffset: "+05:30", // India Standard Time (IST, Asia/Kolkata)
+  allowPreviewButton: true, // Set to false before sharing the final site
+  youtubeUrl: "https://youtube.com/shorts/P005J8HRBGw",
   audioFile: "anna.mp3",
   audioVolume: 0.35
 };
+
+/* ===================================
+   YOUTUBE EMBED LOADER
+   =================================== */
+
+function extractYouTubeId(url) {
+  if (!url) return "";
+  const match = url.trim().match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+  );
+  return match ? match[1] : "";
+}
+
+function initYouTubeVideo() {
+  const container = document.getElementById("ytContainer");
+  const directLink = document.getElementById("ytDirectLink");
+  const videoId = extractYouTubeId(CONFIG.youtubeUrl);
+
+  if (directLink && CONFIG.youtubeUrl) {
+    directLink.href = CONFIG.youtubeUrl.trim();
+  }
+
+  if (!container || !videoId) return;
+  if (container.dataset.loadedVideoId === videoId) return;
+
+  container.innerHTML = "";
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1`;
+  iframe.title = "Birthday YouTube Video for Anna";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.allowFullscreen = true;
+  container.appendChild(iframe);
+  container.dataset.loadedVideoId = videoId;
+}
 
 /* ===================================
    FRIENDLY BIRTHDAY MESSAGE POOLS
@@ -1722,32 +1823,93 @@ function makeConfetti() {
 
 setInterval(createPetal, 950);
 
-/* COUNTDOWN */
+/* COUNTDOWN (ANCHORED TO INDIA TIME / IST) */
+
+const INDIA_TIME_ZONE = "Asia/Kolkata";
 
 function getBirthdayTime() {
   const [year, month, day] = CONFIG.birthdayDate.split("-").map(Number);
-  const [hour, minute] = CONFIG.unlockTime.split(":").map(Number);
-  return new Date(year, month - 1, day, hour, minute, 0);
+  const [rawHour, minute] = CONFIG.unlockTime.split(":").map(Number);
+  const normalizedHour = rawHour === 24 ? 0 : rawHour;
+  const dayAdjust = rawHour === 24 ? 1 : 0;
+
+  const targetDateObj = new Date(Date.UTC(year, month - 1, day + dayAdjust, 12, 0, 0));
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: INDIA_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(targetDateObj);
+
+  const y = parts.find((p) => p.type === "year").value;
+  const m = parts.find((p) => p.type === "month").value;
+  const d = parts.find((p) => p.type === "day").value;
+  const hh = String(normalizedHour).padStart(2, "0");
+  const mm = String(minute).padStart(2, "0");
+
+  const offset = CONFIG.timezoneOffset || "+05:30";
+  return new Date(`${y}-${m}-${d}T${hh}:${mm}:00${offset}`);
+}
+
+function updateIstLabels() {
+  const targetDate = getBirthdayTime();
+  const dateFormatter = new Intl.DateTimeFormat("en-IN", {
+    timeZone: INDIA_TIME_ZONE,
+    month: "short",
+    day: "numeric"
+  });
+  const timeFormatter = new Intl.DateTimeFormat("en-IN", {
+    timeZone: INDIA_TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+
+  const formattedDate = dateFormatter.format(targetDate).toUpperCase();
+  const formattedTime = timeFormatter.format(targetDate);
+
+  const labelEl = document.getElementById("istTargetLabel");
+  if (labelEl) {
+    labelEl.textContent = `${formattedDate} · ${formattedTime} IST (INDIA TIME)`;
+  }
+
+  const descEl = document.getElementById("countdownDescription");
+  if (descEl) {
+    descEl.textContent = `Counting down to ${formattedTime} on ${dateFormatter.format(targetDate)} in India (IST) to celebrate you.`;
+  }
 }
 
 let unlockedOnce = false;
 
-function updateCountdown() {
-  const difference = getBirthdayTime() - new Date();
+function unlockBirthdayWorld(isPreview = false) {
+  document.getElementById("countdownScreen").classList.add("hidden");
+  document.getElementById("birthdayScreen").classList.remove("hidden");
+  document.getElementById("musicButton").classList.remove("hidden");
 
-  if (difference <= 0) {
-    document.getElementById("countdownScreen").classList.add("hidden");
-    document.getElementById("birthdayScreen").classList.remove("hidden");
-    document.getElementById("musicButton").classList.remove("hidden");
+  initYouTubeVideo();
+  revealVisibleSections();
+  updateScrollUI();
 
-    revealVisibleSections();
-    updateScrollUI();
-
+  if (!isPreview) {
     clearInterval(countdownInterval);
-    if (!unlockedOnce) {
-      unlockedOnce = true;
-      makeConfetti();
-    }
+  }
+  if (!unlockedOnce) {
+    unlockedOnce = true;
+    makeConfetti();
+  }
+}
+
+const previewBtn = document.getElementById("previewPageBtn");
+if (previewBtn && CONFIG.allowPreviewButton) {
+  previewBtn.classList.remove("hidden");
+}
+
+function updateCountdown() {
+  const targetMs = getBirthdayTime().getTime();
+  const difference = Math.max(0, targetMs - Date.now());
+
+  if (difference === 0) {
+    unlockBirthdayWorld(false);
     return;
   }
 
@@ -1761,6 +1923,8 @@ function updateCountdown() {
     String(Math.floor(difference / 1000) % 60).padStart(2, "0");
 }
 
+updateIstLabels();
+initYouTubeVideo();
 const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
 
